@@ -55,9 +55,7 @@ module.exports = function (Entry, done) {
 
 			return Entry.qAggregate(
 				{ $match: { _id: { $in: parentEntry.childEntries } } },
-				{
-					$project: projection
-				}
+				{ $project: projection }
 			);
 		});
 	};

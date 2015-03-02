@@ -22,7 +22,6 @@ if (app.get('env') === 'development') {
 	app.use(require('express-logger')({ path: logPath }));
 }
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(require('cookie-parser')(credentials.cookieSecret));
 app.use(express.static(path.join(__dirname, 'public')));

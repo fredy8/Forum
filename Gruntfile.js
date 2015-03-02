@@ -133,7 +133,6 @@ module.exports = function (grunt) {
 		}
 	});
 
-	// register tasks
 	grunt.registerTask('test', ['jshint', 'cafemocha']);
 	grunt.registerTask('compile', ['exec:deleteBinFiles', 'uglify:beautify',
 		'cssmin', 'cssbeautifier']);

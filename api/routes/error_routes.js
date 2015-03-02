@@ -23,7 +23,7 @@ module.exports = function (router) {
 		}
 
 		res.status(401);
-		res.json( { error: '401 - Unauthorized', details: err.message });
+		res.json({ error: '401 - Unauthorized', details: err.message });
 	});
 
 	// 409 Conflict

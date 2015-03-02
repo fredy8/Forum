@@ -1,6 +1,12 @@
 var mongoose = require('mongoose');
 var q = require('q');
 
+/**
+ * Creates a mongoose model from a schema and extends it for support with q
+ * promises. Q supported methods are equivalent in functionality to mongoose
+ * model's methods and start with a q. These methods return a promise instead
+ * of requiring a callback.
+ */
 module.exports = function (name, schema) {
 	var model = mongoose.model(name, schema);
 	
