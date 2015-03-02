@@ -1,4 +1,4 @@
-Project management system for Caracol Comunicaciones
+Forum Website
 
 Directory Layout
 ----------------
@@ -60,7 +60,7 @@ Installing
 1. Clone the repository:
 
   ```
-  git clone git@github.com:fredy8/Sistema-Caracol.git [my_project_name]
+  git clone git@github.com:fredy8/Forum.git [my_project_name]
   cd [my_project_name]
   ```
 2. Install dependencies
