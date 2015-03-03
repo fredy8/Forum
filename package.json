@@ -63,6 +63,7 @@
     "morgan": "^1.5.1",
     "protractor": "^1.5.0",
     "restler": "^3.2.2",
-    "shelljs": "^0.3.0"
+    "shelljs": "^0.3.0",
+    "sinon": "^1.12.2"
   }
 }

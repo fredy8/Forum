@@ -9,25 +9,23 @@ module.exports = function (Entry, done) {
 	Entry.qFindOneAndUpdate({ main: true }, { main: true }, { upsert: true })
 	.then(function (mainEntry) {
 		mainEntryId = mainEntry._id;
-	}).fail(function (error) {
+	}).catch(function (error) {
 		throw error;
 	}).finally(done);
 
 	var getAll = function (parentId, username) {
 		parentId = parentId || mainEntryId;
-
-		validate(utils.isObjectId(parentId),
-			'parentId must be an object id');
+		
+		validate(utils.isObjectId(parentId), 'parentId must be an object id');
+		
+		Entry.qFindById(parentId)
+		.then(function () {
+			return Entry.qFind({ _id: parentEntry.childEntries });
+		});
 
 		var projection = {
-			_id: true,
-			title: true,
-			submissionDate: true,
-			content: true,
-			childEntries: true,
-			op: true,
-			upvotes: { $size: '$upvotes' },
-			downvotes: { $size: '$downvotes' }
+			title: 1, submissionDate: 1, content: 1, childEntries: 1, op: 1,
+			upvotes: { $size: '$upvotes' }, downvotes: { $size: '$downvotes' }
 		};
 
 		if (username) {
@@ -90,21 +88,19 @@ module.exports = function (Entry, done) {
 			.then(function (newEntry) {
 				return Entry.qUpdate({ _id: parentId },
 					{ $push: { childEntries: newEntry._id } })
-					.then(function () { return { _id: newEntry._id }; });
+					.thenResolve({ _id: newEntry._id });
 			});
 		});
 	};
 
 	var vote = function (entryId, vote, username) {
 		validate(utils.isObjectId(entryId), 'entryId must be an object id');
-		validate(vote === -1 || vote === 0 || vote === 1,
-			'vote must be -1, 0 or 1');
+		validate(_.contains([-1, 0, 1], vote), 'vote must be -1, 0 or 1');
 		if(!_.isString(username)) {
 			throw { code: 'authorization' };
 		}
 
-		var addToSet = {};
-		var pull = {};
+		var addToSet = {}, pull = {};
 
 		if (vote) {
 			addToSet[vote === 1 ? 'upvotes' : 'downvotes'] = username;

@@ -30,13 +30,30 @@ describe('Entries Controller >', function () {
 		return Entry.qRemove({});
 	});
 
+	it('Creates a new main entry if none exists', function () {
+		Entry.qFindOne({ main: true }).then(function (entry) {
+			expect(entry.main).to.be.true;
+		});
+	});
+
+	it('Only one main entry is created.', function () {
+		
+
+		require('../../../api/controllers/entries_controller')(Entry,
+			function () {
+				Entry.qCount({ main: true }).then(function (count) {
+					expect(count).to.equal(1);
+				});
+			});
+	});
+
 	describe('Create Entry >', function () {
 
 		it('should fail when parentId is not an objectId', function () {
 			return entriesController
 			.create(32749, validEntry, username)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -49,7 +66,7 @@ describe('Entries Controller >', function () {
 			return entriesController
 			.create('507f1f77bcf86cd799439011', null, username)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -62,7 +79,7 @@ describe('Entries Controller >', function () {
 			return entriesController
 			.create('507f1f77bcf86cd799439011', validEntry, 58298)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -78,7 +95,7 @@ describe('Entries Controller >', function () {
 				{ title: invalidEntry.title, content: validEntry.content },
 				username)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -93,7 +110,7 @@ describe('Entries Controller >', function () {
 				{ title: validEntry.title, content: invalidEntry.content },
 				username)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -106,7 +123,7 @@ describe('Entries Controller >', function () {
 			return entriesController
 			.create('507f1f77bcf86cd799439011', validEntry, username)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -130,7 +147,7 @@ describe('Entries Controller >', function () {
 				expect(entry.content).to.equal(validEntry.content);
 				expect(entry.childEntries).to.be.empty;
 				expect(entry.main).not.to.be.defined;
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should return the new entry id', function () {
@@ -142,7 +159,7 @@ describe('Entries Controller >', function () {
 					expect(key).to.equal('_id');
 					expect(value).not.to.be.undefined;
 				});
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should create a new entry with no title if there is a parent',
@@ -157,7 +174,7 @@ describe('Entries Controller >', function () {
 				});
 			}).then(function (entry) {
 				expect(entry.title).to.be.undefined;
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should save a new entry reference in the parent entry',
@@ -174,7 +191,7 @@ describe('Entries Controller >', function () {
 							.to.include(childEntryId._id);
 					});
 				});
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should save the new entry reference in the main entry if there ' +
@@ -186,7 +203,7 @@ describe('Entries Controller >', function () {
 				.then(function (mainEntry) {
 					expect(mainEntry.childEntries).to.include(entryId._id);
 				});
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 	});
@@ -197,7 +214,7 @@ describe('Entries Controller >', function () {
 			return entriesController
 			.getAll(43214)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -243,7 +260,7 @@ describe('Entries Controller >', function () {
 						
 					});
 				});
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should return all top level entries if parentId is not specified.',
@@ -265,7 +282,7 @@ describe('Entries Controller >', function () {
 					
 					expect(obtainedIds).to.deep.equal(expectedIds);
 				});
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should return the vote status if the user is specified.',
@@ -281,7 +298,7 @@ describe('Entries Controller >', function () {
 				return entriesController.getAll(null, username);
 			}).spread(function (entry) {
 				expect(entry.voteStatus).to.equal(1);
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 	});
@@ -300,7 +317,7 @@ describe('Entries Controller >', function () {
 			return entriesController
 			.vote(423412, 1, username)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -313,7 +330,7 @@ describe('Entries Controller >', function () {
 			return entriesController
 			.vote(entryId, 2, username)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -326,7 +343,7 @@ describe('Entries Controller >', function () {
 			return entriesController
 			.vote(entryId, 1, 83247)
 			.then(function () { expect(false).to.be.true; })
-			.fail(function (error) {
+			.catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -340,7 +357,7 @@ describe('Entries Controller >', function () {
 			.vote('507f1f77bcf86cd799439011', 1, username)
 			.then(function () {
 				expect(false).to.be.true;
-			}).fail(function (error) {
+			}).catch(function (error) {
 				if (!error.code) {
 					throw error;
 				}
@@ -358,7 +375,7 @@ describe('Entries Controller >', function () {
 			}).then(function (entry) {
 				expect(entry.upvotes).to.include(username);
 				expect(entry.downvotes).to.be.empty;
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should add the user to the downvotes array when downvoted',
@@ -370,7 +387,7 @@ describe('Entries Controller >', function () {
 			}).then(function (entry) {
 				expect(entry.upvotes).to.be.empty;
 				expect(entry.downvotes).to.include(username);
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should remove the user from the opposite vote array',
@@ -390,7 +407,7 @@ describe('Entries Controller >', function () {
 			}).then(function (entry) {
 				expect(entry.upvotes).to.include(username);
 				expect(entry.downvotes).to.be.empty;
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should remove the user from vote arrays if the status is 0',
@@ -412,14 +429,14 @@ describe('Entries Controller >', function () {
 				return Entry.qFindById(entryId);
 			}).then(function (entry) {
 				expect(entry.downvotes).to.be.empty;
-			}).fail(function (error) { throw error; });
+			}).catch(function (error) { throw error; });
 		});
 
 		it('should not return anything', function () {
 			return entriesController
 			.vote(entryId, 1, username)
 			.then(function (data) { expect(data).to.be.undefined; })
-			.fail(function (error) { throw error; });
+			.catch(function (error) { throw error; });
 		});
 
 	});

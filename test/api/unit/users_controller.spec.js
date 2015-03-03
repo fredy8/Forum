@@ -2,12 +2,16 @@ var q = require('q');
 var mongoose = require('mongoose');
 var expect = require('chai').expect;
 var credentials = require('../../../server/credentials');
+var sinon = require('sinon');
+var bcrypt = require('bcrypt');
 
 describe('Users Controller >', function () {
 
 	before(function (done) {
 		mongoose.connect(credentials.mongo.test.connectionString,
 			{ server: { socketOptions: { keepAlive: 1 } } }, done);
+		sinon.stub(bcrypt, 'genSalt').yields(null, 'dhsflakdafas');
+		sinon.stub(bcrypt, 'hash').yields(null, '198u4jdsa');
 	});
 
 	after(function (done) {

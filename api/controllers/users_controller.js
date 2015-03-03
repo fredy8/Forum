@@ -21,14 +21,14 @@ module.exports = function (User) {
 					message: 'The username already exists.' };
 			}
 		}).then(function () {
-			return q.nfcall(bcrypt.genSalt, 12)
+			return q.nfcall(bcrypt.genSalt)
 			.then(function (salt) {
-				q.nfcall(bcrypt.hash, user.password, salt)
+				return q.nfcall(bcrypt.hash, user.password, salt)
 				.then(function (hashedPassword) {
 					var hashedUser = { username: user.username,
 						password: hashedPassword, salt: salt };
 					return User.qCreate(hashedUser)
-					.then(function () { });
+					.thenResolve();
 				});
 			});
 		});
@@ -58,7 +58,7 @@ module.exports = function (User) {
 		getUser(username, password)
 		.then(function (user) {
 			done(null, user);
-		}).fail(function (error) {
+		}).catch(function (error) {
 			done(error, false);
 		});
 	}));
