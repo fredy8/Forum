@@ -15,14 +15,9 @@ module.exports = function (Entry, done) {
 
 	var getAll = function (parentId, username) {
 		parentId = parentId || mainEntryId;
-		
+
 		validate(utils.isObjectId(parentId), 'parentId must be an object id');
 		
-		Entry.qFindById(parentId)
-		.then(function () {
-			return Entry.qFind({ _id: parentEntry.childEntries });
-		});
-
 		var projection = {
 			title: 1, submissionDate: 1, content: 1, childEntries: 1, op: 1,
 			upvotes: { $size: '$upvotes' }, downvotes: { $size: '$downvotes' }
