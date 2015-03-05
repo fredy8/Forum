@@ -9,11 +9,12 @@ var routes = [
 
 var addRoute = function (method, route, handler) {
 	router[method](route, function (req, res, next) {
+		console.log('check');
 		q.when(handler(req, res))
 		.then(function (result) {
 			result ? res.json(result) : res.end();
 		}).fail(function (error) {
-			next(error.code === 'not found' ? undefined : error);
+			next(!error || error.code === 'not found' ? undefined : error);
 		});
 	});
 };

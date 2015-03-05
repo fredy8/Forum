@@ -37,8 +37,6 @@ describe('Entries Controller >', function () {
 	});
 
 	it('Only one main entry is created.', function () {
-		
-
 		require('../../../api/controllers/entries_controller')(Entry,
 			function () {
 				Entry.qCount({ main: true }).then(function (count) {

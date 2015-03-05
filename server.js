@@ -12,7 +12,7 @@ var dbConnectionString = credentials.mongo[app.get('env')].connectionString;
 var MongoSessionStore = require('session-mongoose')(require('connect'));
 var sessionStore = new MongoSessionStore({ url: dbConnectionString });
 
-app.use(require('compression')()); // gzip responses
+app.use(require('compression')());
 // app.use(require('serve-favicon')(__dirname + '/public/img/favicon.ico'));
 
 if (app.get('env') === 'development') {
@@ -23,6 +23,11 @@ if (app.get('env') === 'development') {
 }
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(function (req, res, next) {
+	console.log(req.body);
+	next();
+});
 app.use(require('cookie-parser')(credentials.cookieSecret));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'angular-app/app'), {
