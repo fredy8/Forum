@@ -1,7 +1,7 @@
+Reddit-like Website
+-------------------
+
 [![Build Status](https://semaphoreapp.com/api/v1/projects/1d526ec2-ecb2-4a55-aecc-f63841f19c77/366041/badge.png)](https://semaphoreapp.com/fredy8/forum)      
-
-
-Forum Website
 
 Directory Layout
 ----------------
@@ -48,14 +48,10 @@ Template/
 Prerequisites
 -------------
 
-1. Install git:
-  `brew install git` or http://git-scm.com/
-2. Install node and npm:
+1. Install node and npm:
   `brew install node` or http://nodejs.org/
-3. Install mongodb
+2. Install mongodb
   `brew install mongodb` or http://docs.mongodb.org/manual/installation/
-4. Create database directory
-  `sudo mkdir -p /data/db`
 
 Installing
 ----------
@@ -72,13 +68,15 @@ Installing
 
   `sudo npm install -g grunt-cli`
   
+  `sudo npm install -g webdriver-manager`
+  
   `sudo npm install -g bower`
 
 Running
 -------
 
 1. Start the database
-  `sudo mongod`
+  `sudo mongod --dbpath=[my_db_data_folder]`
 2. Start the server
   `npm start`
 
@@ -114,17 +112,3 @@ When the server is running, just go to http://localhost:8080/debug?port=5858.
 
 ### Frontend
 In chrome, go to View -> Developer Tools
-
-Deploying
----------
-```
-git checkout production
-git rebase master
-npm test                      # All tests must pass
-git checkout master
-git push origin production
-```
-
-After this, go into the server, pull the production branch and start the server.
-TO DO: hook up the server to github to auto deploy.
-
