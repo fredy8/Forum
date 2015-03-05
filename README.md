@@ -1,3 +1,6 @@
+[![Build Status](https://semaphoreapp.com/api/v1/projects/1d526ec2-ecb2-4a55-aecc-f63841f19c77/366041/badge.png)](https://semaphoreapp.com/fredy8/forum)      
+
+
 Forum Website
 
 Directory Layout
