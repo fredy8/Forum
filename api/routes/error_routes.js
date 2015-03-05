@@ -6,14 +6,14 @@ module.exports = function (router) {
 		res.json({ error: '404 - Not found.' });
 	});
 
-	// 400 Bad request
+	// 422 Unprocessable Entity
 	router.use(function (err, req, res, next) {
 		if (err.code !== 'validation') {
 			return next(err);
 		}
 
-		res.status(400);
-		res.json({ error: '400 - Bad Request', details: err.message });
+		res.status(422);
+		res.json({ error: '400 - Unprocessable Entity', details: err.message });
 	});
 
 	// 401 Authorization
