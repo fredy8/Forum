@@ -56,7 +56,7 @@ describe('Entries Controller >', function () {
 					throw error;
 				}
 
-				expect(error.code).to.equal('validation2');
+				expect(error.code).to.equal('validation');
 			});
 		});
 
