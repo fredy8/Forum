@@ -2,7 +2,7 @@ var q = require('q');
 var _ = require('underscore');
 var mongoose = require('mongoose');
 var expect = require('chai').expect;
-var credentials = require('../../../server/credentials');
+var credentials = require('../../../../server/modules/credentials');
 
 describe('Entries Controller >', function () {
 
@@ -21,9 +21,10 @@ describe('Entries Controller >', function () {
 		validEntry = { title: 'Mock', content: 'Entry' };
 		invalidEntry = { title: 41234, content: 41312 };
 		username = 'user123';
-		Entry = require('../../../api/models/Entry');
+		Entry = require('../../../../server/api/models/Entry');
 		entriesController =
-			require('../../../api/controllers/entries_controller')(Entry, done);
+			require('../../../../server/api/controllers/entries_controller')
+			(Entry, done);
 	});
 
 	afterEach(function () {
@@ -37,7 +38,7 @@ describe('Entries Controller >', function () {
 	});
 
 	it('Only one main entry is created.', function () {
-		require('../../../api/controllers/entries_controller')(Entry,
+		require('../../../../server/api/controllers/entries_controller')(Entry,
 			function () {
 				Entry.qCount({ main: true }).then(function (count) {
 					expect(count).to.equal(1);

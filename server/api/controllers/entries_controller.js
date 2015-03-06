@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var utils = require('../../server/utils');
+var utils = require('../../../server/modules/utils');
 var validate = utils.validate;
 
 // for all methods, username is assumed to be a valid user to avoid an extra

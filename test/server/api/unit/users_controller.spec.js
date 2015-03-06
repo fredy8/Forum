@@ -1,7 +1,7 @@
 var q = require('q');
 var mongoose = require('mongoose');
 var expect = require('chai').expect;
-var credentials = require('../../../server/credentials');
+var credentials = require('../../../../server/modules/credentials');
 var sinon = require('sinon');
 var bcrypt = require('bcrypt');
 
@@ -23,9 +23,10 @@ describe('Users Controller >', function () {
 	beforeEach(function () {
 		validUser = { username: 'user123', password: 'password123' };
 		invalidUser = { username: 41234, password: 41312 };
-		User = require('../../../api/models/User');
+		User = require('../../../../server/api/models/User');
 		usersController =
-			require('../../../api/controllers/users_controller')(User);
+			require('../../../../server/api/controllers/users_controller')
+			(User);
 	});
 
 	afterEach(function () {

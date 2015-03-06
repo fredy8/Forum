@@ -2,7 +2,7 @@
   "name": "",
   "version": "0.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "prestart": "npm install",
     "start": "grunt nodemon",

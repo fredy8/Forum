@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var promisifyModel = require('../../server/promisify-model');
+var promisifyModel = require('../../../server/modules/promisify-model');
 
 var EntrySchema = new Schema({
 	title: String,

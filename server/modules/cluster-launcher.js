@@ -14,13 +14,12 @@ module.exports = function (startServer, init) {
 		});
 
 		cluster.on('disconnect', function (worker) {
-			console.log('Worker %d disconnected from the cluster.',
-				worker.id);
+			console.log('Worker %d disconnected from the cluster.', worker.id);
 		});
 
 		cluster.on('exit', function (worker, code, signal) {
-			console.log('Worker %d died with exit code %d (%s)',
-				worker.id, code, signal);
+			console.log('Worker %d died with exit code %d (%s)', worker.id,
+				code, signal);
 			startWorker();
 		});
 	} else {

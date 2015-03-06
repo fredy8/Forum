@@ -3,7 +3,7 @@ var q = require('q');
 var bcrypt = require('bcrypt');
 var LocalStrategy = require('passport-local').Strategy;
 var passport = require('passport');
-var utils = require('../../server/utils');
+var utils = require('../../../server/modules/utils');
 var validate = utils.validate;
 
 module.exports = function (User) {
