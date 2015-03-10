@@ -13,7 +13,7 @@ module.exports = function (router) {
 		}
 
 		res.status(422);
-		res.json({ error: '400 - Unprocessable Entity', details: err.message });
+		res.json({ error: '422 - Unprocessable Entity', details: err.message });
 	});
 
 	// 401 Authorization

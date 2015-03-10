@@ -9,7 +9,6 @@ var routes = [
 
 var addRoute = function (method, route, handler) {
 	router[method](route, function (req, res, next) {
-		console.log('check');
 		q.when(handler(req, res))
 		.then(function (result) {
 			result ? res.json(result) : res.end();
